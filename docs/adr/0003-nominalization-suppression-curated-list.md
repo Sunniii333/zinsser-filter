@@ -1,0 +1,7 @@
+# Nominalization suppression (§6.3) uses a curated exception list, not live Lexitron membership
+
+§3.3 assumed "is the ความ/การ-compound present in Lexitron as a noun" would distinguish a genuinely lexicalized noun (suppress) from one a writer coined on the fly (flag) — and that this distinction was, in its own words, "what makes that rule viable at all." Checking the actual `telex-utf8.csv` data disproved it: `ความจำเป็น` and `ความช่วยเหลือ` — both worked examples the spec says *should* fire — are themselves Lexitron nouns, identically to `ความสุข`/`ความรัก`, which the spec says should be *suppressed*. The dataset has no field (frequency, register, compositionality) that separates the two groups. The same failure hits the Tier C example: `การปรับปรุง` is present in Lexitron even though the spec's firing condition for that example is "absent from Lexitron."
+
+Considered dropping suppression entirely and running the whole family at Tier C, but that would gut the rule the stakeholder named as highest-priority in the project — Tier B's confident flag is its main value.
+
+Decided instead: suppression for this rule family is a hand-curated exception list (literal terms in the rule's `suppression` field), maintained by the Editor like any other rule content, not a dynamic Lexitron lookup. This keeps Tier B alive at the cost the project already expected to pay — §12 named rule-authoring/curation labor, not engineering, as the real bottleneck; this just makes explicit that suppression curation is part of that labor rather than something Lexitron gives for free.

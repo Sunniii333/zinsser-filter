@@ -4,9 +4,9 @@
 
 **Blocked by:** None — can start immediately.
 
-**Status:** blocked-on-user (deploy step needs the account owner's Neon/Vercel login)
+**Status:** resolved
 
-- [ ] App deployed on Vercel, connected to Neon Postgres (free tier, per ADR 0004)
+- [x] App deployed on Vercel, connected to Neon Postgres (free tier, per ADR 0004)
 - [x] Auth.js credentials provider (email + password, no SSO) wired end to end
 - [x] A seeded Editor account can log in and reach an authenticated shell page
 - [x] Editor can invite a Writer account (invite-only — no self-service signup path exists)
@@ -16,4 +16,4 @@
 
 Code complete as of commit `0f437e8`: Next.js app scaffold, Drizzle `users` schema, Auth.js credentials provider (JWT sessions, no adapter needed), `/login` + `/dashboard` pages, Editor-only `inviteWriter` server action, `db/seed.ts` for the initial Editor. Typecheck, lint, and `next build` all pass locally.
 
-Deploy is the one remaining checkbox — it needs a real Neon connection string and a Vercel login, neither of which the agent has. `scripts/deploy-setup.sh` is a step-by-step wizard for the account owner to run themselves: creates the Neon project, runs `db:push`/`db:seed` against it, generates `AUTH_SECRET`, and deploys to Vercel. Once that's run, flip the last checkbox and set Status to `resolved`.
+Deployed live at https://zinsser-filter.vercel.app (Neon project + GitHub repo `Sunniii333/zinsser-filter`, imported into Vercel via its dashboard rather than the CLI — the account owner's local terminal wasn't accepting keyboard input, so `scripts/deploy-setup.sh` went unused in favor of a browser-only GitHub+Vercel-dashboard path, run jointly with the agent). Verified end to end via browser automation: Editor login → dashboard, Editor invites a Writer, Writer logs in with those credentials and sees the dashboard without the invite form. The test Writer account created for verification was deleted afterward.
